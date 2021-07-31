@@ -138,7 +138,7 @@ namespace GameOfLife
             {
                 for (int j = 0; j < SizeY; j++)
                 {
-//                    nextGenerationCells[i, j] = CalculateNextGeneration(i,j);          // UNOPTIMIZED
+                    nextGenerationCells[i, j] = CalculateNextGeneration(i,j);          // UNOPTIMIZED
                     CalculateNextGeneration(i, j, ref alive, ref age);   // OPTIMIZED
                     nextGenerationCells[i, j].IsAlive = alive;  // OPTIMIZED
                     nextGenerationCells[i, j].Age = age;  // OPTIMIZED
@@ -156,18 +156,23 @@ namespace GameOfLife
             //age = cells[row, column].Age;
             var count = CountNeighbors(row, column);
 
-            if (alive && count < 2)
+            if (alive)
             {
-                return new Cell(row, column, 0, false);
-            }
-            else if (alive && (count == 2 || count == 3))
-            {
-                cells[row, column].Age++;
-                return new Cell(row, column, cells[row, column].Age, true);
-            }
-            else if (alive && count > 3)
-            {
-                return new Cell(row, column, 0, false);
+                if (count == 2 || count == 3)
+                {
+                    cells[row, column].Age++;
+                    return new Cell(row, column, cells[row, column].Age, true);
+                }
+                else
+                    return new Cell(row, column, 0, false);
+                /*else if (count < 2)
+                {
+                    return new Cell(row, column, 0, false);
+                }
+                else if (count > 3)
+                {
+                    return new Cell(row, column, 0, false);
+                }*/
             }
             else if (!alive && count == 3)
             {

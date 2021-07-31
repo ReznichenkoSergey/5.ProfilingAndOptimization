@@ -46,7 +46,8 @@ namespace ProfileSample.Controllers
                 {
                     Name = item.Name,
                     Data = item.Data
-                }).ToListAsync();
+                })
+                .ToListAsync();
 
             return View(model);
         }
@@ -71,7 +72,7 @@ namespace ProfileSample.Controllers
                 }
             }
             await _content.SaveChangesAsync();
-
+            
             /*using (var context = new ProfileSampleEntities())
             {
                 foreach (var file in files)
